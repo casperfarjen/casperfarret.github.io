@@ -1,0 +1,617 @@
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Research & Publications - Casper Farret Jentink</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --dark-bg: #121212;
+            --darker-bg: #0a0a0a;
+            --accent: #c15050;
+            --secondary-accent: #a03c3c;
+            --text: #e0e0e0;
+            --subtle-text: #a0a0a0;
+            --border: #2a2a2a;
+        }
+        
+        h1, h2, h3, h4, h5, h6 {
+            font-family: 'Space Grotesk', sans-serif;
+        }
+        
+        body {
+            font-family: 'Inter', 'Segoe UI', Roboto, -apple-system, BlinkMacSystemFont, sans-serif;
+            background-color: var(--dark-bg);
+            color: var(--text);
+            line-height: 1.6;
+        }
+        
+        header {
+            background-color: var(--darker-bg);
+            padding: 1rem 0;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+        }
+        
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            font-weight: 700;
+            font-size: 1.5rem;
+            color: var(--text);
+            text-decoration: none;
+        }
+        
+        .nav-links {
+            display: flex;
+            list-style: none;
+        }
+        
+        .nav-links li {
+            margin-left: 2rem;
+        }
+        
+        .nav-links a {
+            color: var(--subtle-text);
+            text-decoration: none;
+            font-size: 0.95rem;
+            transition: color 0.3s;
+            font-weight: 500;
+        }
+        
+        .nav-links a:hover,
+        .nav-links a.active {
+            color: var(--accent);
+        }
+        
+        section {
+            padding: 5rem 0;
+        }
+        
+        h1 {
+            font-size: 3rem;
+            margin-bottom: 2rem;
+            text-align: center;
+            background: linear-gradient(to right, var(--accent), #e67373);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+        
+        h2 {
+            font-size: 2rem;
+            margin-bottom: 2rem;
+            color: var(--accent);
+            position: relative;
+        }
+        
+        .research-intro {
+            margin-bottom: 4rem;
+            text-align: center;
+        }
+        
+        .research-intro p {
+            max-width: 800px;
+            margin: 0 auto;
+            color: var(--subtle-text);
+            font-size: 1.1rem;
+        }
+        
+        .research-areas {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 2rem;
+            margin-bottom: 4rem;
+        }
+        
+        .research-area {
+            background-color: rgba(255, 255, 255, 0.05);
+            border-radius: 12px;
+            padding: 2rem;
+            border: 1px solid var(--border);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        
+        .research-area:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+        }
+        
+        .research-area h3 {
+            color: var(--accent);
+            margin-bottom: 1rem;
+            font-size: 1.3rem;
+        }
+        
+        .research-area p {
+            color: var(--subtle-text);
+        }
+        
+        .publications-container {
+            background-color: rgba(255, 255, 255, 0.03);
+            border-radius: 12px;
+            padding: 2rem;
+            border: 1px solid var(--border);
+        }
+        
+        .publication-filters {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 2rem;
+            flex-wrap: wrap;
+        }
+        
+        .filter-btn {
+            background-color: rgba(255, 255, 255, 0.05);
+            border: 1px solid var(--border);
+            color: var(--subtle-text);
+            padding: 0.5rem 1rem;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-size: 0.9rem;
+        }
+        
+        .filter-btn:hover, .filter-btn.active {
+            background-color: var(--accent);
+            color: white;
+        }
+        
+        .publication {
+            margin-bottom: 2rem;
+            padding-bottom: 2rem;
+            border-bottom: 1px solid var(--border);
+        }
+        
+        .publication:last-child {
+            border-bottom: none;
+            margin-bottom: 0;
+            padding-bottom: 0;
+        }
+        
+        .publication-title {
+            font-size: 1.2rem;
+            color: var(--text);
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+        }
+        
+        .publication-authors {
+            font-size: 0.9rem;
+            color: var(--subtle-text);
+            margin-bottom: 0.5rem;
+        }
+        
+        .publication-journal {
+            font-size: 0.9rem;
+            color: var(--accent);
+            margin-bottom: 0.5rem;
+            font-style: italic;
+        }
+        
+        .publication-abstract {
+            margin-top: 1rem;
+            color: var(--subtle-text);
+            font-size: 0.95rem;
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease-out;
+        }
+        
+        .publication-abstract.show {
+            max-height: 500px;
+        }
+        
+        .publication-links {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1rem;
+            flex-wrap: wrap;
+        }
+        
+        .publication-link {
+            font-size: 0.8rem;
+            color: var(--accent);
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 0.3rem;
+        }
+        
+        .publication-link:hover {
+            text-decoration: underline;
+        }
+        
+        .abstract-toggle {
+            font-size: 0.9rem;
+            color: var(--accent);
+            background: none;
+            border: none;
+            cursor: pointer;
+            padding: 0;
+            margin-top: 0.5rem;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.3rem;
+        }
+        
+        .abstract-toggle:hover {
+            text-decoration: underline;
+        }
+        
+        footer {
+            background-color: var(--darker-bg);
+            padding: 3rem 0;
+            text-align: center;
+            margin-top: 5rem;
+        }
+        
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            margin-bottom: 2rem;
+            flex-wrap: wrap;
+            padding: 0 1rem;
+        }
+        
+        .footer-link {
+            color: var(--subtle-text);
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+        
+        .footer-link:hover {
+            color: var(--accent);
+        }
+        
+        .social-links {
+            display: flex;
+            justify-content: center;
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+        
+        .social-link {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background-color: rgba(255, 255, 255, 0.1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--text);
+            transition: background-color 0.3s, transform 0.3s;
+        }
+        
+        .social-link:hover {
+            background-color: var(--accent);
+            transform: translateY(-3px);
+        }
+        
+        .copyright {
+            font-size: 0.9rem;
+            color: var(--subtle-text);
+        }
+        
+        /* Mobile Menu Styles */
+        .menu-toggle {
+            display: none;
+            background: none;
+            border: none;
+            color: var(--text);
+            font-size: 1.5rem;
+            cursor: pointer;
+            padding: 0.5rem;
+        }
+        
+        @media (max-width: 768px) {
+            .menu-toggle {
+                display: block;
+            }
+            
+            .nav-links {
+                position: fixed;
+                top: 60px;
+                left: 0;
+                width: 100%;
+                background-color: var(--darker-bg);
+                flex-direction: column;
+                align-items: center;
+                padding: 1rem 0;
+                box-shadow: 0 5px 10px rgba(0, 0, 0, 0.3);
+                transform: translateY(-100%);
+                opacity: 0;
+                visibility: hidden;
+                transition: all 0.3s ease-in-out;
+                z-index: 999;
+            }
+            
+            .nav-links.active {
+                transform: translateY(0);
+                opacity: 1;
+                visibility: visible;
+            }
+            
+            .nav-links li {
+                margin: 0.8rem 0;
+            }
+            
+            .nav-links a {
+                font-size: 1.1rem;
+                padding: 0.5rem 1rem;
+                display: block;
+            }
+            
+            h1 {
+                font-size: 2.2rem;
+            }
+            
+            .research-areas {
+                grid-template-columns: 1fr;
+            }
+            
+            .publication-title {
+                font-size: 1.1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <nav>
+                <a href="index.html" class="logo">Casper Farret Jentink</a>
+                <button class="menu-toggle" id="menuToggle">☰</button>
+                <ul class="nav-links" id="mobileMenu">
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="cv.html">CV</a></li>
+                    <li><a href="research.html" class="active">Research & Publications</a></li>
+                    <li><a href="night.html">NIGHT</a></li>
+                    <li><a href="aboras.html">ABORAS</a></li>
+                    <li><a href="posters.html">Cool Posters</a></li>
+                    <li><a href="media.html">Media</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+    
+    <section>
+        <div class="container">
+            <h1>Research & Publications</h1>
+            
+            <div class="research-intro">
+                <p>My research focuses on the development of high-precision astronomical instrumentation for exoplanetary science, with a particular emphasis on high-resolution spectroscopy and the study of exoplanetary atmospheres.</p>
+            </div>
+            
+            <h2>Research Areas</h2>
+            
+            <div class="research-areas">
+                <div class="research-area">
+                    <h3>Exoplanetary Atmospheres</h3>
+                    <p>I study the composition, structure, and evolution of exoplanetary atmospheres using high-resolution spectroscopy. My work focuses on detecting atmospheric escape in hot gas giants, particularly through helium observations in the near-infrared.</p>
+                </div>
+                
+                <div class="research-area">
+                    <h3>Astronomical Instrumentation</h3>
+                    <p>I design and develop high-resolution spectrographs and specialized instruments for exoplanet characterization. This includes work on the NIGHT instrument for helium observations and the ABORAS solar telescope for precision measurements.</p>
+                </div>
+                
+                <div class="research-area">
+                    <h3>Optical Physics</h3>
+                    <p>My research includes work on novel optical components, such as silicon-based meta-materials and resonant immersed waveplates, with applications in astronomical instrumentation for improved efficiency and capabilities.</p>
+                </div>
+            </div>
+            
+            <h2>Publications</h2>
+            
+            <div class="publications-container">
+                <div class="publication-filters">
+                    <button class="filter-btn active" data-filter="all">All Publications</button>
+                    <button class="filter-btn" data-filter="first-author">First Author</button>
+                    <button class="filter-btn" data-filter="instrumentation">Instrumentation</button>
+                    <button class="filter-btn" data-filter="exoplanets">Exoplanets</button>
+                </div>
+                
+                <div class="publications-list">
+                    <div class="publication" data-type="exoplanets">
+                        <div class="publication-title">Vertical structure of an exoplanet's atmospheric jet stream</div>
+                        <div class="publication-authors">Seidel, J. V., Prinoth, B., Pino, L., dos Santos, L. A., Chakraborty, H., Parmentier, V., ... & <strong>Farret Jentink, C.</strong>, ... & Pepe, F. A.</div>
+                        <div class="publication-journal">Nature, 639(8056), 902-908 (2025)</div>
+                        <button class="abstract-toggle">Show Abstract</button>
+                        <div class="publication-abstract">
+                            Abstract for this publication will appear here when the toggle is clicked.
+                        </div>
+                        <div class="publication-links">
+                            <a href="#" class="publication-link">DOI: 10.1038/s41586-025-08664-1</a>
+                            <a href="#" class="publication-link">arXiv: 2502.12261</a>
+                            <a href="papers/Seidel2025.pdf" class="publication-link">PDF</a>
+                        </div>
+                    </div>
+                    
+                    <div class="publication" data-type="instrumentation">
+                        <div class="publication-title">On-sky performance of KalAO the swift adaptive optics imager on the 1.2m Euler Swiss telescope in La Silla, Chile</div>
+                        <div class="publication-authors">Hagelberg, J., Restori, N., Ségransan, D., Guyon, O., Wildi, F., Chazelas, B., ... & <strong>Farret Jentink, C.</strong>, ... & Weber, L.</div>
+                        <div class="publication-journal">Society of Photo-Optical Instrumentation Engineers (SPIE) Conference Series, Vol. 13097 (2024)</div>
+                        <button class="abstract-toggle">Show Abstract</button>
+                        <div class="publication-abstract">
+                            Abstract for this publication will appear here when the toggle is clicked.
+                        </div>
+                        <div class="publication-links">
+                            <a href="#" class="publication-link">DOI: 10.1117/12.3019089</a>
+                            <a href="papers/Hagelberg2024.pdf" class="publication-link">PDF</a>
+                        </div>
+                    </div>
+                    
+                    <div class="publication" data-type="instrumentation">
+                        <div class="publication-title">The polarimetric performance of HARPS3 and its impact on the Terra Hunting Experiment scheduling</div>
+                        <div class="publication-authors">Dorval, P., Politopoulos, I., Nicholson, B., ter Horst, R., <strong>Farret Jentink, C.</strong>, Klein, B., ... & Thompson, S.</div>
+                        <div class="publication-journal">Society of Photo-Optical Instrumentation Engineers (SPIE) Conference Series, Vol. 13096 (2024)</div>
+                        <button class="abstract-toggle">Show Abstract</button>
+                        <div class="publication-abstract">
+                            Abstract for this publication will appear here when the toggle is clicked.
+                        </div>
+                        <div class="publication-links">
+                            <a href="#" class="publication-link">DOI: 10.1117/12.3018722</a>
+                            <a href="papers/Dorval2024.pdf" class="publication-link">PDF</a>
+                        </div>
+                    </div>
+                    
+                    <div class="publication" data-type="instrumentation first-author">
+                        <div class="publication-title">The Near-Infrared Gatherer of Helium Transits (NIGHT)</div>
+                        <div class="publication-authors"><strong>Farret Jentink, C.</strong>, Pepe, F., Lovis, C., Bovay, S., Wildi, F., Chazelas, B., ... & Cochard, F.</div>
+                        <div class="publication-journal">Society of Photo-Optical Instrumentation Engineers (SPIE) Conference Series, Vol. 13096 (2024)</div>
+                        <button class="abstract-toggle">Show Abstract</button>
+                        <div class="publication-abstract">
+                            This paper provides a comprehensive overview of the subsystems of the NIGHT instrument. NIGHT (the Near Infrared Gatherer of Helium Transits) is a narrowband, high-resolution spectrograph, marking the first dedicated survey instrument for exoplanetary atmosphere observations. Developed through a collaboration between the Observatory of Geneva, several other Swiss institutes, and the Université de Montréal, NIGHT aims to conduct an extensive statistical survey of helium atmospheres around 100+ exoplanets over several years. The instrument will report new detections of helium in exoplanet atmospheres and perform temporal monitoring of a subset of these.
+                        </div>
+                        <div class="publication-links">
+                            <a href="#" class="publication-link">DOI: 10.1117/12.3014420</a>
+                            <a href="#" class="publication-link">arXiv: 2405.18899</a>
+                            <a href="papers/FarretJentink2024SPIE.pdf" class="publication-link">PDF</a>
+                        </div>
+                    </div>
+                    
+                    <div class="publication" data-type="instrumentation first-author">
+                        <div class="publication-title">NIGHT: A compact, near-infrared, high-resolution spectrograph to survey helium in exoplanet systems</div>
+                        <div class="publication-authors"><strong>Farret Jentink, C.</strong>, Bourrier, V., Lovis, C., Allart, R., Chazelas, B., Lendl, M., Dumusque, X. & Pepe, F.</div>
+                        <div class="publication-journal">Monthly Notices of the Royal Astronomical Society, 527(3), 4467-4482 (2024)</div>
+                        <button class="abstract-toggle">Show Abstract</button>
+                        <div class="publication-abstract">
+                            Abstract for this publication will appear here when the toggle is clicked.
+                        </div>
+                        <div class="publication-links">
+                            <a href="#" class="publication-link">DOI: 10.1093/mnras/stad3285</a>
+                            <a href="#" class="publication-link">arXiv: 2310.17275</a>
+                            <a href="papers/FarretJentink2024MNRAS.pdf" class="publication-link">PDF</a>
+                        </div>
+                    </div>
+                    
+                    <div class="publication" data-type="instrumentation first-author">
+                        <div class="publication-title">ABORAS: polarimetric, 10cm/s RV observations of the Sun as a star</div>
+                        <div class="publication-authors"><strong>Farret Jentink, C.</strong>, Mortier, A., Snik, F., Dorval, P., Thompson, S. J., Navarro, R. & Naylor, T.</div>
+                        <div class="publication-journal">Society of Photo-Optical Instrumentation Engineers (SPIE) Conference Series, Vol. 12182 (2022)</div>
+                        <button class="abstract-toggle">Show Abstract</button>
+                        <div class="publication-abstract">
+                            We present a description of A dual-Beam polarimetric Robotic Aperture for the Sun (ABORAS), to serve as a Solar input with a dedicated Stokes V polarimeter for the HARPS3 high-resolution spectrograph. ABORAS has three main science drivers: trying to understand the physics behind stellar variability, tracking the long term stability of HARPS3, and serve as a benchmark for Earth-sized exoplanet detection with HARPS3 by injecting an Earth RV signal into the data. By design, ABORAS will (together with the HARPS3 instrument) be able to measure 10cm/s variations in RV of the integrated Solar disk and detect integrated magnetic field levels at sub 1 Gauss level through circularly polarized light.
+                        </div>
+                        <div class="publication-links">
+                            <a href="#" class="publication-link">DOI: 10.1117/12.2627113</a>
+                            <a href="#" class="publication-link">arXiv: 2207.04804</a>
+                            <a href="papers/FarretJentink2022.pdf" class="publication-link">PDF</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <footer>
+        <div class="container">
+            <div class="footer-links">
+                <a href="index.html" class="footer-link">Home</a>
+                <a href="cv.html" class="footer-link">CV</a>
+                <a href="research.html" class="footer-link">Research</a>
+                <a href="night.html" class="footer-link">NIGHT</a>
+                <a href="aboras.html" class="footer-link">ABORAS</a>
+                <a href="posters.html" class="footer-link">Posters</a>
+                <a href="media.html" class="footer-link">Media</a>
+            </div>
+            <div class="social-links">
+                <a href="#" class="social-link">G</a>
+                <a href="#" class="social-link">T</a>
+                <a href="#" class="social-link">L</a>
+            </div>
+            <div class="copyright">
+                © 2025 Casper Farret Jentink. All rights reserved.
+            </div>
+        </div>
+    </footer>
+    
+    <script>
+        // Toggle abstract visibility
+        document.querySelectorAll('.abstract-toggle').forEach(button => {
+            button.addEventListener('click', function() {
+                const abstract = this.nextElementSibling;
+                abstract.classList.toggle('show');
+                this.textContent = abstract.classList.contains('show') ? 'Hide Abstract' : 'Show Abstract';
+            });
+        });
+        
+        // Publication filtering
+        document.querySelectorAll('.filter-btn').forEach(button => {
+            button.addEventListener('click', function() {
+                // Update active state
+                document.querySelectorAll('.filter-btn').forEach(btn => {
+                    btn.classList.remove('active');
+                });
+                this.classList.add('active');
+                
+                const filter = this.getAttribute('data-filter');
+                const publications = document.querySelectorAll('.publication');
+                
+                publications.forEach(pub => {
+                    if (filter === 'all') {
+                        pub.style.display = 'block';
+                    } else {
+                        if (pub.getAttribute('data-type').includes(filter)) {
+                            pub.style.display = 'block';
+                        } else {
+                            pub.style.display = 'none';
+                        }
+                    }
+                });
+            });
+        });
+        
+        // Mobile Menu Toggle
+        document.addEventListener('DOMContentLoaded', function() {
+            const menuToggle = document.getElementById('menuToggle');
+            const mobileMenu = document.getElementById('mobileMenu');
+            
+            if (menuToggle && mobileMenu) {
+                menuToggle.addEventListener('click', function() {
+                    mobileMenu.classList.toggle('active');
+                    menuToggle.textContent = mobileMenu.classList.contains('active') ? '✕' : '☰';
+                });
+                
+                // Close menu when clicking a link
+                const navLinks = mobileMenu.querySelectorAll('a');
+                navLinks.forEach(link => {
+                    link.addEventListener('click', function() {
+                        mobileMenu.classList.remove('active');
+                        menuToggle.textContent = '☰';
+                    });
+                });
+                
+                // Close menu when clicking outside
+                document.addEventListener('click', function(event) {
+                    if (!mobileMenu.contains(event.target) && !menuToggle.contains(event.target) && mobileMenu.classList.contains('active')) {
+                        mobileMenu.classList.remove('active');
+                        menuToggle.textContent = '☰';
+                    }
+                });
+            }
+        });
+    </script>
+</body>
+</html>

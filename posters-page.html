@@ -1,0 +1,673 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cool Posters - Casper Farret Jentink</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --dark-bg: #121212;
+            --darker-bg: #0a0a0a;
+            --accent: #c15050;
+            --secondary-accent: #a03c3c;
+            --text: #e0e0e0;
+            --subtle-text: #a0a0a0;
+            --border: #2a2a2a;
+        }
+        
+        h1, h2, h3, h4, h5, h6 {
+            font-family: 'Space Grotesk', sans-serif;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Inter', 'Segoe UI', Roboto, -apple-system, BlinkMacSystemFont, sans-serif;
+            background-color: var(--dark-bg);
+            color: var(--text);
+            line-height: 1.6;
+        }
+        
+        header {
+            background-color: var(--darker-bg);
+            padding: 1rem 0;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+        }
+        
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            font-weight: 700;
+            font-size: 1.5rem;
+            color: var(--text);
+            text-decoration: none;
+        }
+        
+        .nav-links {
+            display: flex;
+            list-style: none;
+        }
+        
+        .nav-links li {
+            margin-left: 2rem;
+        }
+        
+        .nav-links a {
+            color: var(--subtle-text);
+            text-decoration: none;
+            font-size: 0.95rem;
+            transition: color 0.3s;
+            font-weight: 500;
+        }
+        
+        .nav-links a:hover,
+        .nav-links a.active {
+            color: var(--accent);
+        }
+        
+        section {
+            padding: 5rem 0;
+        }
+        
+        h1 {
+            font-size: 3rem;
+            margin-bottom: 2rem;
+            text-align: center;
+            background: linear-gradient(to right, var(--accent), #e67373);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+        
+        .intro {
+            max-width: 800px;
+            margin: 0 auto 3rem;
+            text-align: center;
+            color: var(--subtle-text);
+        }
+        
+        .poster-filters {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 1rem;
+            margin-bottom: 3rem;
+        }
+        
+        .filter-btn {
+            background-color: rgba(255, 255, 255, 0.05);
+            border: 1px solid var(--border);
+            color: var(--subtle-text);
+            padding: 0.5rem 1.5rem;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-size: 0.9rem;
+        }
+        
+        .filter-btn:hover, .filter-btn.active {
+            background-color: var(--accent);
+            color: white;
+        }
+        
+        .poster-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+        
+        .poster-item {
+            position: relative;
+            border-radius: 12px;
+            overflow: hidden;
+            aspect-ratio: 2/3;
+            cursor: pointer;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+            border: 1px solid var(--border);
+            transition: transform 0.3s;
+        }
+        
+        .poster-item:hover {
+            transform: translateY(-10px);
+        }
+        
+        .poster-image {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s;
+        }
+        
+        .poster-overlay {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: linear-gradient(to top, rgba(0, 0, 0, 0.8), transparent);
+            padding: 2rem 1rem 1rem;
+            transform: translateY(100%);
+            transition: transform 0.3s ease-out;
+        }
+        
+        .poster-item:hover .poster-overlay {
+            transform: translateY(0);
+        }
+        
+        .poster-item:hover .poster-image {
+            transform: scale(1.05);
+        }
+        
+        .poster-title {
+            font-size: 1.2rem;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+        }
+        
+        .poster-date {
+            font-size: 0.9rem;
+            color: var(--accent);
+            margin-bottom: 0.5rem;
+        }
+        
+        .poster-description {
+            font-size: 0.9rem;
+            color: var(--subtle-text);
+        }
+        
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.9);
+            z-index: 1100;
+            padding: 2rem;
+            overflow-y: auto;
+        }
+        
+        .modal-content {
+            position: relative;
+            margin: 0 auto;
+            max-width: 90vh;
+            height: 90vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .modal-image {
+            max-height: 100%;
+            max-width: 100%;
+            object-fit: contain;
+        }
+        
+        .modal-close {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            background: var(--accent);
+            color: white;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            font-size: 1.5rem;
+            z-index: 1101;
+        }
+        
+        .modal-info {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: linear-gradient(to top, rgba(0, 0, 0, 0.8), transparent);
+            padding: 2rem 1rem 1rem;
+            color: white;
+        }
+        
+        .modal-title {
+            font-size: 1.5rem;
+            margin-bottom: 0.5rem;
+        }
+        
+        .modal-description {
+            font-size: 1rem;
+            color: var(--subtle-text);
+        }
+        
+        .modal-download {
+            display: inline-block;
+            background-color: var(--accent);
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 5px;
+            text-decoration: none;
+            font-weight: 600;
+            margin-top: 1rem;
+            font-size: 0.9rem;
+        }
+        
+        .no-results {
+            text-align: center;
+            padding: 3rem;
+            color: var(--subtle-text);
+            font-size: 1.2rem;
+            grid-column: 1 / -1;
+        }
+        
+        footer {
+            background-color: var(--darker-bg);
+            padding: 3rem 0;
+            text-align: center;
+            margin-top: 5rem;
+        }
+        
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            margin-bottom: 2rem;
+            flex-wrap: wrap;
+            padding: 0 1rem;
+        }
+        
+        .footer-link {
+            color: var(--subtle-text);
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+        
+        .footer-link:hover {
+            color: var(--accent);
+        }
+        
+        .social-links {
+            display: flex;
+            justify-content: center;
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+        
+        .social-link {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background-color: rgba(255, 255, 255, 0.1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--text);
+            transition: background-color 0.3s, transform 0.3s;
+        }
+        
+        .social-link:hover {
+            background-color: var(--accent);
+            transform: translateY(-3px);
+        }
+        
+        .copyright {
+            font-size: 0.9rem;
+            color: var(--subtle-text);
+        }
+        
+        .image-credit {
+            font-size: 0.7rem;
+            color: var(--subtle-text);
+            opacity: 0.7;
+            text-align: right;
+            margin-top: 5px;
+            font-style: italic;
+            position: absolute;
+            bottom: 5px;
+            right: 10px;
+            background-color: rgba(0, 0, 0, 0.6);
+            padding: 2px 6px;
+            border-radius: 3px;
+        }
+        
+        /* Mobile Menu Styles */
+        .menu-toggle {
+            display: none;
+            background: none;
+            border: none;
+            color: var(--text);
+            font-size: 1.5rem;
+            cursor: pointer;
+            padding: 0.5rem;
+        }
+        
+        @media (max-width: 768px) {
+            .menu-toggle {
+                display: block;
+            }
+            
+            .nav-links {
+                position: fixed;
+                top: 60px;
+                left: 0;
+                width: 100%;
+                background-color: var(--darker-bg);
+                flex-direction: column;
+                align-items: center;
+                padding: 1rem 0;
+                box-shadow: 0 5px 10px rgba(0, 0, 0, 0.3);
+                transform: translateY(-100%);
+                opacity: 0;
+                visibility: hidden;
+                transition: all 0.3s ease-in-out;
+                z-index: 999;
+            }
+            
+            .nav-links.active {
+                transform: translateY(0);
+                opacity: 1;
+                visibility: visible;
+            }
+            
+            .nav-links li {
+                margin: 0.8rem 0;
+            }
+            
+            .nav-links a {
+                font-size: 1.1rem;
+                padding: 0.5rem 1rem;
+                display: block;
+            }
+            
+            h1 {
+                font-size: 2.2rem;
+            }
+            
+            .poster-grid {
+                grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            }
+        }
+        
+        @media (max-width: 576px) {
+            .poster-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .modal-content {
+                padding: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <nav>
+                <a href="index.html" class="logo">Casper Farret Jentink</a>
+                <button class="menu-toggle" id="menuToggle">☰</button>
+                <ul class="nav-links" id="mobileMenu">
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="cv.html">CV</a></li>
+                    <li><a href="research.html">Research & Publications</a></li>
+                    <li><a href="night.html">NIGHT</a></li>
+                    <li><a href="aboras.html">ABORAS</a></li>
+                    <li><a href="posters.html" class="active">Cool Posters</a></li>
+                    <li><a href="media.html">Media</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+    
+    <section>
+        <div class="container">
+            <h1>Cool Posters</h1>
+            
+            <div class="intro">
+                <p>Over the years, I've collected and created various astronomy and astrophysics posters from conferences, outreach events, and research projects. Here's a gallery of my favorites.</p>
+            </div>
+            
+            <div class="poster-filters">
+                <button class="filter-btn active" data-filter="all">All Posters</button>
+                <button class="filter-btn" data-filter="conference">Conference</button>
+                <button class="filter-btn" data-filter="outreach">Outreach</button>
+                <button class="filter-btn" data-filter="artwork">Artwork</button>
+            </div>
+            
+            <div class="poster-grid">
+                <!-- Poster 1 -->
+                <div class="poster-item" data-type="conference">
+                    <img src="/api/placeholder/400/600" alt="NIGHT Instrument Poster" class="poster-image">
+                    <div class="image-credit">Credit: NIGHT Collaboration, 2024</div>
+                    <div class="poster-overlay">
+                        <div class="poster-title">NIGHT: A dedicated helium transit survey</div>
+                        <div class="poster-date">SPIE Conference 2024</div>
+                        <div class="poster-description">Presentation of the NIGHT instrument design and scientific goals at the SPIE Astronomical Instrumentation conference.</div>
+                    </div>
+                </div>
+                
+                <!-- Poster 2 -->
+                <div class="poster-item" data-type="conference">
+                    <img src="/api/placeholder/400/600" alt="ABORAS Poster" class="poster-image">
+                    <div class="image-credit">Credit: C. Farret Jentink, 2022</div>
+                    <div class="poster-overlay">
+                        <div class="poster-title">ABORAS: Polarimetric Solar Observations</div>
+                        <div class="poster-date">SPIE Conference 2022</div>
+                        <div class="poster-description">Overview of the ABORAS instrument and its application to precise stellar variability studies.</div>
+                    </div>
+                </div>
+                
+                <!-- Poster 3 -->
+                <div class="poster-item" data-type="outreach">
+                    <img src="/api/placeholder/400/600" alt="Exoplanet Detection Methods" class="poster-image">
+                    <div class="image-credit">Credit: University of Geneva, 2023</div>
+                    <div class="poster-overlay">
+                        <div class="poster-title">How We Find Exoplanets</div>
+                        <div class="poster-date">University Open Day 2023</div>
+                        <div class="poster-description">Educational poster explaining the various methods used to detect exoplanets, created for a public outreach event.</div>
+                    </div>
+                </div>
+                
+                <!-- Poster 4 -->
+                <div class="poster-item" data-type="artwork">
+                    <img src="/api/placeholder/400/600" alt="Cosmic Web Art" class="poster-image">
+                    <div class="image-credit">Credit: Observatory of Geneva, 2023</div>
+                    <div class="poster-overlay">
+                        <div class="poster-title">The Cosmic Web</div>
+                        <div class="poster-date">2023</div>
+                        <div class="poster-description">Artistic visualization of the large-scale structure of the universe, showing the filamentary distribution of matter.</div>
+                    </div>
+                </div>
+                
+                <!-- Poster 5 -->
+                <div class="poster-item" data-type="conference">
+                    <img src="/api/placeholder/400/600" alt="Helium Atmospheres Poster" class="poster-image">
+                    <div class="image-credit">Credit: C. Farret Jentink, 2023</div>
+                    <div class="poster-overlay">
+                        <div class="poster-title">Helium as a Tracer of Atmospheric Escape</div>
+                        <div class="poster-date">Exoplanet Conference 2023</div>
+                        <div class="poster-description">Research poster on the use of helium as a diagnostic tool for atmospheric escape in hot gas giants.</div>
+                    </div>
+                </div>
+                
+                <!-- Poster 6 -->
+                <div class="poster-item" data-type="outreach">
+                    <img src="/api/placeholder/400/600" alt="Solar System Scale" class="poster-image">
+                    <div class="image-credit">Credit: University of Groningen, 2022</div>
+                    <div class="poster-overlay">
+                        <div class="poster-title">Our Solar System to Scale</div>
+                        <div class="poster-date">2022</div>
+                        <div class="poster-description">Educational poster showing the true scale of our solar system, created for public astronomy nights.</div>
+                    </div>
+                </div>
+                
+                <!-- No results message (hidden by default) -->
+                <div class="no-results" style="display: none;">
+                    <p>No posters match the selected filter.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Modal for enlarged poster view -->
+    <div class="modal" id="posterModal">
+        <span class="modal-close">&times;</span>
+        <div class="modal-content">
+            <img src="" alt="" class="modal-image" id="modalImage">
+            <div class="modal-info">
+                <h3 class="modal-title" id="modalTitle"></h3>
+                <p class="modal-description" id="modalDescription"></p>
+                <a href="#" class="modal-download" id="modalDownload" download>Download Poster</a>
+            </div>
+        </div>
+    </div>
+    
+    <footer>
+        <div class="container">
+            <div class="footer-links">
+                <a href="index.html" class="footer-link">Home</a>
+                <a href="cv.html" class="footer-link">CV</a>
+                <a href="research.html" class="footer-link">Research</a>
+                <a href="night.html" class="footer-link">NIGHT</a>
+                <a href="aboras.html" class="footer-link">ABORAS</a>
+                <a href="posters.html" class="footer-link">Posters</a>
+                <a href="media.html" class="footer-link">Media</a>
+            </div>
+            <div class="social-links">
+                <a href="#" class="social-link">G</a>
+                <a href="#" class="social-link">T</a>
+                <a href="#" class="social-link">L</a>
+            </div>
+            <div class="copyright">
+                © 2025 Casper Farret Jentink. All rights reserved.
+            </div>
+        </div>
+    </footer>
+    
+    <script>
+        // Filtering functionality
+        document.querySelectorAll('.filter-btn').forEach(button => {
+            button.addEventListener('click', function() {
+                // Update active state
+                document.querySelectorAll('.filter-btn').forEach(btn => {
+                    btn.classList.remove('active');
+                });
+                this.classList.add('active');
+                
+                const filter = this.getAttribute('data-filter');
+                const posters = document.querySelectorAll('.poster-item');
+                let visibleCount = 0;
+                
+                posters.forEach(poster => {
+                    if (filter === 'all' || poster.getAttribute('data-type') === filter) {
+                        poster.style.display = 'block';
+                        visibleCount++;
+                    } else {
+                        poster.style.display = 'none';
+                    }
+                });
+                
+                // Show/hide "no results" message
+                document.querySelector('.no-results').style.display = visibleCount === 0 ? 'block' : 'none';
+            });
+        });
+        
+        // Modal functionality
+        const modal = document.getElementById('posterModal');
+        const modalImage = document.getElementById('modalImage');
+        const modalTitle = document.getElementById('modalTitle');
+        const modalDescription = document.getElementById('modalDescription');
+        const modalDownload = document.getElementById('modalDownload');
+        const modalClose = document.querySelector('.modal-close');
+        
+        // Open modal on poster click
+        document.querySelectorAll('.poster-item').forEach(item => {
+            item.addEventListener('click', function() {
+                const img = this.querySelector('.poster-image');
+                const title = this.querySelector('.poster-title').textContent;
+                const description = this.querySelector('.poster-description').textContent;
+                
+                modalImage.src = img.src;
+                modalImage.alt = img.alt;
+                modalTitle.textContent = title;
+                modalDescription.textContent = description;
+                modalDownload.href = img.src;
+                
+                modal.style.display = 'block';
+                document.body.style.overflow = 'hidden'; // Prevent scrolling when modal is open
+            });
+        });
+        
+        // Close modal
+        modalClose.addEventListener('click', function() {
+            modal.style.display = 'none';
+            document.body.style.overflow = ''; // Restore scrolling
+        });
+        
+        // Close modal when clicking outside of content
+        window.addEventListener('click', function(event) {
+            if (event.target === modal) {
+                modal.style.display = 'none';
+                document.body.style.overflow = '';
+            }
+        });
+        
+        // Close modal with escape key
+        window.addEventListener('keydown', function(event) {
+            if (event.key === 'Escape' && modal.style.display === 'block') {
+                modal.style.display = 'none';
+                document.body.style.overflow = '';
+            }
+        });
+        
+        // Mobile Menu Toggle
+        document.addEventListener('DOMContentLoaded', function() {
+            const menuToggle = document.getElementById('menuToggle');
+            const mobileMenu = document.getElementById('mobileMenu');
+            
+            if (menuToggle && mobileMenu) {
+                menuToggle.addEventListener('click', function() {
+                    mobileMenu.classList.toggle('active');
+                    menuToggle.textContent = mobileMenu.classList.contains('active') ? '✕' : '☰';
+                });
+                
+                // Close menu when clicking a link
+                const navLinks = mobileMenu.querySelectorAll('a');
+                navLinks.forEach(link => {
+                    link.addEventListener('click', function() {
+                        mobileMenu.classList.remove('active');
+                        menuToggle.textContent = '☰';
+                    });
+                });
+                
+                // Close menu when clicking outside
+                document.addEventListener('click', function(event) {
+                    if (!mobileMenu.contains(event.target) && !menuToggle.contains(event.target) && mobileMenu.classList.contains('active')) {
+                        mobileMenu.classList.remove('active');
+                        menuToggle.textContent = '☰';
+                    }
+                });
+            }
+        });
+    </script>
+</body>
+</html>

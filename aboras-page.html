@@ -1,0 +1,772 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ABORAS Instrument - Casper Farret Jentink</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --dark-bg: #121212;
+            --darker-bg: #0a0a0a;
+            --accent: #c15050;
+            --secondary-accent: #a03c3c;
+            --text: #e0e0e0;
+            --subtle-text: #a0a0a0;
+            --border: #2a2a2a;
+        }
+        
+        h1, h2, h3, h4, h5, h6 {
+            font-family: 'Space Grotesk', sans-serif;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Inter', 'Segoe UI', Roboto, -apple-system, BlinkMacSystemFont, sans-serif;
+            background-color: var(--dark-bg);
+            color: var(--text);
+            line-height: 1.6;
+        }
+        
+        /* ABORAS-specific background */
+        body::before {
+            content: "";
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url('/api/placeholder/2000/1500');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            opacity: 0.2;
+            z-index: -1;
+        }
+        
+        body::after {
+            content: "";
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.7);
+            z-index: -1;
+        }
+        
+        header {
+            background-color: var(--darker-bg);
+            padding: 1rem 0;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+        }
+        
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            font-weight: 700;
+            font-size: 1.5rem;
+            color: var(--text);
+            text-decoration: none;
+        }
+        
+        .nav-links {
+            display: flex;
+            list-style: none;
+        }
+        
+        .nav-links li {
+            margin-left: 2rem;
+        }
+        
+        .nav-links a {
+            color: var(--subtle-text);
+            text-decoration: none;
+            font-size: 0.95rem;
+            transition: color 0.3s;
+            font-weight: 500;
+        }
+        
+        .nav-links a:hover,
+        .nav-links a.active {
+            color: var(--accent);
+        }
+        
+        section {
+            padding: 5rem 0;
+        }
+        
+        h1 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            background: linear-gradient(to right, var(--accent), #e67373);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+        
+        h2 {
+            font-size: 2rem;
+            margin-bottom: 1.5rem;
+            margin-top: 3rem;
+            color: var(--accent);
+        }
+        
+        h3 {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            margin-top: 2rem;
+            color: var(--text);
+        }
+        
+        p {
+            margin-bottom: 1.5rem;
+            color: var(--subtle-text);
+        }
+        
+        .project-header {
+            display: flex;
+            align-items: center;
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+        
+        .project-title {
+            flex: 1;
+        }
+        
+        .project-title .subtitle {
+            font-size: 1.4rem;
+            color: var(--subtle-text);
+            margin-bottom: 1rem;
+        }
+        
+        .project-image {
+            flex: 1;
+            position: relative;
+        }
+        
+        .project-image img {
+            width: 100%;
+            border-radius: 12px;
+            border: 1px solid var(--border);
+        }
+        
+        .features {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 2rem;
+            margin: 3rem 0;
+        }
+        
+        .feature-card {
+            background-color: rgba(255, 255, 255, 0.05);
+            border-radius: 12px;
+            padding: 1.5rem;
+            border: 1px solid var(--border);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        
+        .feature-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+        }
+        
+        .feature-card h4 {
+            color: var(--accent);
+            margin-bottom: 1rem;
+            font-size: 1.2rem;
+        }
+        
+        .feature-card p {
+            font-size: 0.95rem;
+            color: var(--subtle-text);
+        }
+        
+        .science-goals {
+            margin: 3rem 0;
+        }
+        
+        .science-item {
+            background-color: rgba(255, 255, 255, 0.05);
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+            border: 1px solid var(--border);
+        }
+        
+        .science-item h3 {
+            color: var(--accent);
+            margin-top: 0;
+        }
+        
+        .diagram {
+            margin: 3rem 0;
+            text-align: center;
+        }
+        
+        .diagram img {
+            max-width: 100%;
+            border-radius: 12px;
+            border: 1px solid var(--border);
+        }
+        
+        .diagram-caption {
+            margin-top: 1rem;
+            font-size: 0.9rem;
+            color: var(--subtle-text);
+            font-style: italic;
+        }
+        
+        .technical-details {
+            margin: 3rem 0;
+        }
+        
+        .specs-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 2rem 0;
+        }
+        
+        .specs-table th, .specs-table td {
+            padding: 1rem;
+            text-align: left;
+            border-bottom: 1px solid var(--border);
+        }
+        
+        .specs-table th {
+            color: var(--accent);
+            font-weight: 600;
+        }
+        
+        .specs-table td {
+            color: var(--subtle-text);
+        }
+        
+        .gallery {
+            margin: 3rem 0;
+        }
+        
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 1.5rem;
+        }
+        
+        .gallery-item {
+            position: relative;
+            overflow: hidden;
+            border-radius: 8px;
+            height: 250px;
+            cursor: pointer;
+            border: 1px solid var(--border);
+        }
+        
+        .gallery-image {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.3s;
+        }
+        
+        .gallery-item:hover .gallery-image {
+            transform: scale(1.05);
+        }
+        
+        .team-section {
+            margin: 3rem 0;
+        }
+        
+        .team-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 2rem;
+        }
+        
+        .team-member {
+            text-align: center;
+        }
+        
+        .team-member-image {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            margin: 0 auto 1rem;
+            object-fit: cover;
+            border: 2px solid var(--border);
+        }
+        
+        .team-member-name {
+            font-weight: 600;
+            margin-bottom: 0.3rem;
+        }
+        
+        .team-member-role {
+            font-size: 0.9rem;
+            color: var(--subtle-text);
+        }
+        
+        .publications-section {
+            margin: 3rem 0;
+        }
+        
+        .publication {
+            margin-bottom: 1.5rem;
+            padding-bottom: 1.5rem;
+            border-bottom: 1px solid var(--border);
+        }
+        
+        .publication:last-child {
+            border-bottom: none;
+        }
+        
+        .publication-title {
+            font-size: 1.1rem;
+            color: var(--text);
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+        }
+        
+        .publication-authors {
+            font-size: 0.9rem;
+            color: var(--subtle-text);
+            margin-bottom: 0.5rem;
+        }
+        
+        .publication-journal {
+            font-size: 0.9rem;
+            color: var(--accent);
+            margin-bottom: 0.5rem;
+            font-style: italic;
+        }
+        
+        .publication-links {
+            display: flex;
+            gap: 1rem;
+            margin-top: 0.5rem;
+        }
+        
+        .publication-link {
+            font-size: 0.8rem;
+            color: var(--accent);
+            text-decoration: none;
+        }
+        
+        .publication-link:hover {
+            text-decoration: underline;
+        }
+        
+        .contact-section {
+            margin: 3rem 0;
+            text-align: center;
+        }
+        
+        .btn {
+            display: inline-block;
+            background-color: var(--accent);
+            color: white;
+            padding: 0.8rem 1.5rem;
+            border-radius: 5px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s;
+            border: none;
+            cursor: pointer;
+        }
+        
+        .btn:hover {
+            background-color: var(--secondary-accent);
+            transform: translateY(-2px);
+        }
+        
+        footer {
+            background-color: var(--darker-bg);
+            padding: 3rem 0;
+            text-align: center;
+            margin-top: 5rem;
+        }
+        
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            margin-bottom: 2rem;
+            flex-wrap: wrap;
+            padding: 0 1rem;
+        }
+        
+        .footer-link {
+            color: var(--subtle-text);
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+        
+        .footer-link:hover {
+            color: var(--accent);
+        }
+        
+        .social-links {
+            display: flex;
+            justify-content: center;
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+        
+        .social-link {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background-color: rgba(255, 255, 255, 0.1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--text);
+            transition: background-color 0.3s, transform 0.3s;
+        }
+        
+        .social-link:hover {
+            background-color: var(--accent);
+            transform: translateY(-3px);
+        }
+        
+        .copyright {
+            font-size: 0.9rem;
+            color: var(--subtle-text);
+        }
+        
+        /* Mobile Menu Styles */
+        .menu-toggle {
+            display: none;
+            background: none;
+            border: none;
+            color: var(--text);
+            font-size: 1.5rem;
+            cursor: pointer;
+            padding: 0.5rem;
+        }
+        
+        @media (max-width: 992px) {
+            .project-header {
+                flex-direction: column;
+                text-align: center;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .menu-toggle {
+                display: block;
+            }
+            
+            .nav-links {
+                position: fixed;
+                top: 60px;
+                left: 0;
+                width: 100%;
+                background-color: var(--darker-bg);
+                flex-direction: column;
+                align-items: center;
+                padding: 1rem 0;
+                box-shadow: 0 5px 10px rgba(0, 0, 0, 0.3);
+                transform: translateY(-100%);
+                opacity: 0;
+                visibility: hidden;
+                transition: all 0.3s ease-in-out;
+                z-index: 999;
+            }
+            
+            .nav-links.active {
+                transform: translateY(0);
+                opacity: 1;
+                visibility: visible;
+            }
+            
+            .nav-links li {
+                margin: 0.8rem 0;
+            }
+            
+            .nav-links a {
+                font-size: 1.1rem;
+                padding: 0.5rem 1rem;
+                display: block;
+            }
+            
+            h1 {
+                font-size: 2.2rem;
+            }
+            
+            .features,
+            .gallery-grid,
+            .team-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+        
+        .image-credit {
+            font-size: 0.7rem;
+            color: var(--subtle-text);
+            opacity: 0.7;
+            text-align: right;
+            margin-top: 5px;
+            font-style: italic;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <nav>
+                <a href="index.html" class="logo">Casper Farret Jentink</a>
+                <button class="menu-toggle" id="menuToggle">☰</button>
+                <ul class="nav-links" id="mobileMenu">
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="cv.html">CV</a></li>
+                    <li><a href="research.html">Research & Publications</a></li>
+                    <li><a href="night.html">NIGHT</a></li>
+                    <li><a href="aboras.html" class="active">ABORAS</a></li>
+                    <li><a href="posters.html">Cool Posters</a></li>
+                    <li><a href="media.html">Media</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+    
+    <div style="position: fixed; bottom: 10px; right: 10px; font-size: 0.7rem; color: var(--subtle-text); opacity: 0.5; font-style: italic; z-index: 0; background-color: rgba(0,0,0,0.5); padding: 2px 6px; border-radius: 3px;">
+        Background image credit: NASA/SDO, Solar image in visible wavelength
+    </div>
+    
+    <section>
+        <div class="container">
+            <div class="project-header">
+                <div class="project-title">
+                    <h1>ABORAS</h1>
+                    <div class="subtitle">A dual-Beam polarimetric Robotic Aperture for the Sun</div>
+                    <p>A specialized solar telescope designed to achieve ultra-precise measurements of the Sun's integrated light, providing crucial benchmarks for exoplanet detection and stellar variability studies.</p>
+                </div>
+                <div class="project-image">
+                    <img src="/api/placeholder/600/400" alt="ABORAS Instrument">
+                    <div class="image-credit">Image credit: Terra Hunting Experiment Collaboration, 2023</div>
+                </div>
+            </div>
+            
+            <h2>Project Overview</h2>
+            <p>ABORAS (A dual-Beam polarimetric Robotic Aperture for the Sun) is a specialized solar telescope designed to feed sunlight into the HARPS3 high-resolution spectrograph. This instrument serves as a critical tool for understanding stellar variability and its impact on exoplanet detection.</p>
+            
+            <p>As a project lead, I was deeply involved in developing this instrument that combines polarimetric capabilities with precise radial velocity measurements. By observing the Sun as if it were a distant star, ABORAS provides invaluable insights into the limits of exoplanet detection techniques and helps refine our understanding of stellar activity.</p>
+            
+            <div class="features">
+                <div class="feature-card">
+                    <h4>Extreme Precision</h4>
+                    <p>Capable of measuring 10 cm/s variations in the radial velocity of the integrated solar disk, approaching the signal level of an Earth-like planet.</p>
+                </div>
+                <div class="feature-card">
+                    <h4>Polarimetric Analysis</h4>
+                    <p>Equipped with a dedicated Stokes V polarimeter to detect integrated magnetic field levels below 1 Gauss through circularly polarized light.</p>
+                </div>
+                <div class="feature-card">
+                    <h4>Automated Operation</h4>
+                    <p>Fully robotic design for continuous monitoring of solar activity without human intervention, enabling long-term datasets.</p>
+                </div>
+                <div class="feature-card">
+                    <h4>Dual-Beam Design</h4>
+                    <p>Utilizes a dual-beam approach to simultaneously collect data from different parts of the spectrum, maximizing efficiency and precision.</p>
+                </div>
+            </div>
+            
+            <div class="science-goals">
+                <h2>Scientific Goals</h2>
+                
+                <div class="science-item">
+                    <h3>Understanding Stellar Variability</h3>
+                    <p>By studying the Sun in exquisite detail, ABORAS helps us understand the fundamental physics behind stellar activity and variability. This knowledge is essential for disentangling stellar signals from planetary signals in exoplanet searches.</p>
+                </div>
+                
+                <div class="science-item">
+                    <h3>Calibrating HARPS3 Stability</h3>
+                    <p>ABORAS serves as a continuous monitor of the long-term stability of the HARPS3 instrument, ensuring its reliability for detecting small exoplanets. This calibration is crucial for maintaining the sub-meter-per-second precision required for Earth-like planet detection.</p>
+                </div>
+                
+                <div class="science-item">
+                    <h3>Earth-Sized Planet Detection Benchmarking</h3>
+                    <p>By injecting an Earth-like radial velocity signal into solar observations, ABORAS provides a realistic benchmark for testing detection methods. This approach allows us to determine the true limitations and capabilities of current and future exoplanet detection techniques.</p>
+                </div>
+            </div>
+            
+            <div class="diagram">
+                <h2>System Design</h2>
+                <img src="/api/placeholder/800/400" alt="ABORAS System Diagram">
+                <div class="image-credit">Image credit: Terra Hunting Experiment Collaboration, 2022</div>
+                <div class="diagram-caption">Schematic overview of the ABORAS instrument, showing the light path from solar collection through polarimetric analysis and into the HARPS3 spectrograph.</div>
+            </div>
+            
+            <div class="technical-details">
+                <h2>Technical Specifications</h2>
+                
+                <table class="specs-table">
+                    <tr>
+                        <th>Specification</th>
+                        <th>Value</th>
+                        <th>Notes</th>
+                    </tr>
+                    <tr>
+                        <td>RV Precision</td>
+                        <td>10 cm/s</td>
+                        <td>Integrated solar disk measurement</td>
+                    </tr>
+                    <tr>
+                        <td>Magnetic Sensitivity</td>
+                        <td>< 1 Gauss</td>
+                        <td>Through Stokes V polarimetry</td>
+                    </tr>
+                    <tr>
+                        <td>Telescope Aperture</td>
+                        <td>~ 1 cm</td>
+                        <td>Optimized for solar brightness</td>
+                    </tr>
+                    <tr>
+                        <td>Spectral Resolution</td>
+                        <td>~ 115,000</td>
+                        <td>Via HARPS3 spectrograph</td>
+                    </tr>
+                    <tr>
+                        <td>Wavelength Range</td>
+                        <td>380-690 nm</td>
+                        <td>Optical range for stellar activity indicators</td>
+                    </tr>
+                    <tr>
+                        <td>Automation Level</td>
+                        <td>Fully Robotic</td>
+                        <td>Including weather monitoring and safety systems</td>
+                    </tr>
+                </table>
+            </div>
+            
+            <div class="gallery">
+                <h2>Gallery</h2>
+                <div class="gallery-grid">
+                    <div class="gallery-item">
+                        <img src="/api/placeholder/400/300" alt="ABORAS Prototype" class="gallery-image">
+                        <div class="image-credit">Image credit: Terra Hunting Experiment Collaboration, 2022</div>
+                    </div>
+                    <div class="gallery-item">
+                        <img src="/api/placeholder/400/300" alt="ABORAS Optical Components" class="gallery-image">
+                        <div class="image-credit">Image credit: Terra Hunting Experiment Collaboration, 2022</div>
+                    </div>
+                    <div class="gallery-item">
+                        <img src="/api/placeholder/400/300" alt="ABORAS Installation" class="gallery-image">
+                        <div class="image-credit">Image credit: Terra Hunting Experiment Collaboration, 2022</div>
+                    </div>
+                    <div class="gallery-item">
+                        <img src="/api/placeholder/400/300" alt="ABORAS Data Analysis" class="gallery-image">
+                        <div class="image-credit">Image credit: Terra Hunting Experiment Collaboration, 2022</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="publications-section">
+                <h2>Related Publications</h2>
+                
+                <div class="publication">
+                    <div class="publication-title">ABORAS: polarimetric, 10cm/s RV observations of the Sun as a star</div>
+                    <div class="publication-authors">Farret Jentink, C., Mortier, A., Snik, F., Dorval, P., Thompson, S. J., Navarro, R. & Naylor, T.</div>
+                    <div class="publication-journal">Society of Photo-Optical Instrumentation Engineers (SPIE) Conference Series (2022)</div>
+                    <div class="publication-links">
+                        <a href="#" class="publication-link">DOI: 10.1117/12.2627113</a>
+                        <a href="#" class="publication-link">arXiv: 2207.04804</a>
+                        <a href="papers/FarretJentink2022.pdf" class="publication-link">PDF</a>
+                    </div>
+                </div>
+                
+                <div class="publication">
+                    <div class="publication-title">The polarimetric performance of HARPS3 and its impact on the Terra Hunting Experiment scheduling</div>
+                    <div class="publication-authors">Dorval, P., Politopoulos, I., Nicholson, B., ter Horst, R., Farret Jentink, C., Klein, B., ... & Thompson, S.</div>
+                    <div class="publication-journal">Society of Photo-Optical Instrumentation Engineers (SPIE) Conference Series (2024)</div>
+                    <div class="publication-links">
+                        <a href="#" class="publication-link">DOI: 10.1117/12.3018722</a>
+                        <a href="papers/Dorval2024.pdf" class="publication-link">PDF</a>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="contact-section">
+                <h2>Contact</h2>
+                <p>For more information about the ABORAS instrument or potential collaborations, please contact:</p>
+                <p>Annelies Mortier<br>Project Manager, ABORAS<br>Email: <a href="mailto:annelies.mortier@cambridge.ac.uk" style="color: var(--accent);">annelies.mortier@cambridge.ac.uk</a></p>
+                <a href="research.html" class="btn">Back to Research</a>
+            </div>
+        </div>
+    </section>
+    
+    <footer>
+        <div class="container">
+            <div class="footer-links">
+                <a href="index.html" class="footer-link">Home</a>
+                <a href="cv.html" class="footer-link">CV</a>
+                <a href="research.html" class="footer-link">Research</a>
+                <a href="night.html" class="footer-link">NIGHT</a>
+                <a href="aboras.html" class="footer-link">ABORAS</a>
+                <a href="posters.html" class="footer-link">Posters</a>
+                <a href="media.html" class="footer-link">Media</a>
+            </div>
+            <div class="social-links">
+                <a href="#" class="social-link">G</a>
+                <a href="#" class="social-link">T</a>
+                <a href="#" class="social-link">L</a>
+            </div>
+            <div class="copyright">
+                © 2025 Casper Farret Jentink. All rights reserved.
+            </div>
+        </div>
+    </footer>
+    <script>
+        // Mobile Menu Toggle
+        document.addEventListener('DOMContentLoaded', function() {
+            const menuToggle = document.getElementById('menuToggle');
+            const mobileMenu = document.getElementById('mobileMenu');
+            
+            if (menuToggle && mobileMenu) {
+                menuToggle.addEventListener('click', function() {
+                    mobileMenu.classList.toggle('active');
+                    menuToggle.textContent = mobileMenu.classList.contains('active') ? '✕' : '☰';
+                });
+                
+                // Close menu when clicking a link
+                const navLinks = mobileMenu.querySelectorAll('a');
+                navLinks.forEach(link => {
+                    link.addEventListener('click', function() {
+                        mobileMenu.classList.remove('active');
+                        menuToggle.textContent = '☰';
+                    });
+                });
+                
+                // Close menu when clicking outside
+                document.addEventListener('click', function(event) {
+                    if (!mobileMenu.contains(event.target) && !menuToggle.contains(event.target) && mobileMenu.classList.contains('active')) {
+                        mobileMenu.classList.remove('active');
+                        menuToggle.textContent = '☰';
+                    }
+                });
+            }
+        });
+    </script>
+</body>
+</html>

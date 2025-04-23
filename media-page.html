@@ -1,0 +1,622 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Media - Casper Farret Jentink</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --dark-bg: #121212;
+            --darker-bg: #0a0a0a;
+            --accent: #c15050;
+            --secondary-accent: #a03c3c;
+            --text: #e0e0e0;
+            --subtle-text: #a0a0a0;
+            --border: #2a2a2a;
+        }
+        
+        h1, h2, h3, h4, h5, h6 {
+            font-family: 'Space Grotesk', sans-serif;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Inter', 'Segoe UI', Roboto, -apple-system, BlinkMacSystemFont, sans-serif;
+            background-color: var(--dark-bg);
+            color: var(--text);
+            line-height: 1.6;
+        }
+        
+        header {
+            background-color: var(--darker-bg);
+            padding: 1rem 0;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+        }
+        
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            font-weight: 700;
+            font-size: 1.5rem;
+            color: var(--text);
+            text-decoration: none;
+        }
+        
+        .nav-links {
+            display: flex;
+            list-style: none;
+        }
+        
+        .nav-links li {
+            margin-left: 2rem;
+        }
+        
+        .nav-links a {
+            color: var(--subtle-text);
+            text-decoration: none;
+            font-size: 0.95rem;
+            transition: color 0.3s;
+            font-weight: 500;
+        }
+        
+        .nav-links a:hover,
+        .nav-links a.active {
+            color: var(--accent);
+        }
+        
+        section {
+            padding: 5rem 0;
+        }
+        
+        h1 {
+            font-size: 3rem;
+            margin-bottom: 2rem;
+            text-align: center;
+            background: linear-gradient(to right, var(--accent), #e67373);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+        
+        .intro {
+            max-width: 800px;
+            margin: 0 auto 3rem;
+            text-align: center;
+            color: var(--subtle-text);
+        }
+        
+        .media-filters {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 1rem;
+            margin-bottom: 3rem;
+        }
+        
+        .filter-btn {
+            background-color: rgba(255, 255, 255, 0.05);
+            border: 1px solid var(--border);
+            color: var(--subtle-text);
+            padding: 0.5rem 1.5rem;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-size: 0.9rem;
+        }
+        
+        .filter-btn:hover, .filter-btn.active {
+            background-color: var(--accent);
+            color: white;
+        }
+        
+        .media-container {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+        
+        .media-item {
+            margin-bottom: 3rem;
+            background-color: rgba(255, 255, 255, 0.03);
+            border-radius: 12px;
+            overflow: hidden;
+            border: 1px solid var(--border);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        
+        .media-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+        }
+        
+        .media-thumbnail {
+            width: 100%;
+            height: 300px;
+            object-fit: cover;
+        }
+        
+        .media-content {
+            padding: 1.5rem;
+        }
+        
+        .media-title {
+            font-size: 1.4rem;
+            margin-bottom: 0.5rem;
+            color: var(--text);
+            font-weight: 600;
+        }
+        
+        .media-meta {
+            display: flex;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 1rem;
+            margin-bottom: 1rem;
+        }
+        
+        .media-source {
+            color: var(--accent);
+            font-size: 0.9rem;
+        }
+        .media-date {
+            color: var(--subtle-text);
+            font-size: 0.9rem;
+        }
+        
+        .media-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-bottom: 1rem;
+        }
+        
+        .media-tag {
+            background-color: rgba(255, 255, 255, 0.05);
+            padding: 0.3rem 0.8rem;
+            border-radius: 50px;
+            font-size: 0.8rem;
+            color: var(--subtle-text);
+        }
+        
+        .media-description {
+            color: var(--subtle-text);
+            margin-bottom: 1.5rem;
+        }
+        
+        .media-link {
+            display: inline-block;
+            background-color: var(--accent);
+            color: white;
+            padding: 0.7rem 1.2rem;
+            border-radius: 5px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 0.9rem;
+            transition: background-color 0.3s;
+        }
+        
+        .media-link:hover {
+            background-color: var(--secondary-accent);
+        }
+        
+        .video-container {
+            position: relative;
+            overflow: hidden;
+            padding-top: 56.25%; /* 16:9 aspect ratio */
+        }
+        
+        .video-container iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+        
+        .no-results {
+            text-align: center;
+            padding: 3rem;
+            color: var(--subtle-text);
+            font-size: 1.2rem;
+        }
+        
+        .press-release {
+            background-color: rgba(193, 80, 80, 0.1);
+            border-left: 4px solid var(--accent);
+        }
+        
+        .interview {
+            background-color: rgba(86, 193, 109, 0.1);
+            border-left: 4px solid #56c16d;
+        }
+        
+        .talk {
+            background-color: rgba(224, 156, 83, 0.1);
+            border-left: 4px solid #e09c53;
+        }
+        
+        .article {
+            background-color: rgba(86, 183, 143, 0.1);
+            border-left: 4px solid #56b78f;
+        }
+        
+        footer {
+            background-color: var(--darker-bg);
+            padding: 3rem 0;
+            text-align: center;
+            margin-top: 5rem;
+        }
+        
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            margin-bottom: 2rem;
+            flex-wrap: wrap;
+            padding: 0 1rem;
+        }
+        
+        .footer-link {
+            color: var(--subtle-text);
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+        
+        .footer-link:hover {
+            color: var(--accent);
+        }
+        
+        .social-links {
+            display: flex;
+            justify-content: center;
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+        
+        .social-link {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background-color: rgba(255, 255, 255, 0.1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--text);
+            transition: background-color 0.3s, transform 0.3s;
+        }
+        
+        .social-link:hover {
+            background-color: var(--accent);
+            transform: translateY(-3px);
+        }
+        
+        .copyright {
+            font-size: 0.9rem;
+            color: var(--subtle-text);
+        }
+        
+        /* Mobile Menu Styles */
+        .menu-toggle {
+            display: none;
+            background: none;
+            border: none;
+            color: var(--text);
+            font-size: 1.5rem;
+            cursor: pointer;
+            padding: 0.5rem;
+        }
+        
+        @media (max-width: 768px) {
+            .menu-toggle {
+                display: block;
+            }
+            
+            .nav-links {
+                position: fixed;
+                top: 60px;
+                left: 0;
+                width: 100%;
+                background-color: var(--darker-bg);
+                flex-direction: column;
+                align-items: center;
+                padding: 1rem 0;
+                box-shadow: 0 5px 10px rgba(0, 0, 0, 0.3);
+                transform: translateY(-100%);
+                opacity: 0;
+                visibility: hidden;
+                transition: all 0.3s ease-in-out;
+                z-index: 999;
+            }
+            
+            .nav-links.active {
+                transform: translateY(0);
+                opacity: 1;
+                visibility: visible;
+            }
+            
+            .nav-links li {
+                margin: 0.8rem 0;
+            }
+            
+            .nav-links a {
+                font-size: 1.1rem;
+                padding: 0.5rem 1rem;
+                display: block;
+            }
+            
+            h1 {
+                font-size: 2.2rem;
+            }
+            
+            .media-title {
+                font-size: 1.2rem;
+            }
+        }
+        
+        .image-credit {
+            font-size: 0.7rem;
+            color: var(--subtle-text);
+            opacity: 0.7;
+            text-align: right;
+            margin-top: 5px;
+            font-style: italic;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <nav>
+                <a href="index.html" class="logo">Casper Farret Jentink</a>
+                <button class="menu-toggle" id="menuToggle">☰</button>
+                <ul class="nav-links" id="mobileMenu">
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="cv.html">CV</a></li>
+                    <li><a href="research.html">Research & Publications</a></li>
+                    <li><a href="night.html">NIGHT</a></li>
+                    <li><a href="aboras.html">ABORAS</a></li>
+                    <li><a href="posters.html">Cool Posters</a></li>
+                    <li><a href="media.html" class="active">Media</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+    
+    <section>
+        <div class="container">
+            <h1>Media & Press</h1>
+            
+            <div class="intro">
+                <p>A collection of interviews, press releases, talks, and articles related to my research projects and scientific work in astrophysics and astronomical instrumentation.</p>
+            </div>
+            
+            <div class="media-filters">
+                <button class="filter-btn active" data-filter="all">All Media</button>
+                <button class="filter-btn" data-filter="press-release">Press Releases</button>
+                <button class="filter-btn" data-filter="interview">Interviews</button>
+                <button class="filter-btn" data-filter="talk">Talks</button>
+                <button class="filter-btn" data-filter="article">Articles</button>
+            </div>
+            
+            <div class="media-container">
+                <!-- Talk -->
+                <div class="media-item talk" data-type="talk">
+                    <img src="/api/placeholder/900/300" alt="Scientifika Talk" class="media-thumbnail">
+                    <div class="image-credit">Image credit: Scientifika, 2024</div>
+                    <div class="media-content">
+                        <h3 class="media-title">In Pursuit of Precision: High-Resolution Spectrographs and the Quest for Other Earths</h3>
+                        <div class="media-meta">
+                            <div class="media-source">Scientifika</div>
+                            <div class="media-date">September 6, 2024</div>
+                        </div>
+                        <div class="media-tags">
+                            <span class="media-tag">Talk</span>
+                            <span class="media-tag">Exoplanets</span>
+                            <span class="media-tag">Instrumentation</span>
+                        </div>
+                        <div class="media-description">
+                            <p>Have you ever wondered if we're truly alone in the Universe? That question has captivated me for years, as it has for countless others—philosophers, scientists, and other existentialists—though existentialists might just shrug and say, "Does it really matter?" The vastness of space tempts us to believe that somewhere, another Earth-like world must exist—perhaps even an Earth 2.0, teeming with life as we know it.</p>
+                            <p>In 1995, astronomers discovered the first exoplanet orbiting a star like our Sun, igniting an entirely new branch of astrophysics. Less than 30 years later, this field has exploded, mostly fueled by rapid technological advancements. Yet, as we push our instruments to the limits, it's not just technology that challenges us—the very stars themselves are revealing unexpected obstacles...</p>
+                            <p>Join me for a journey through the fascinating history of exoplanet discovery, from the first breakthrough to the ambitious future observatories still on the horizon. Together, we'll explore the challenges encountered along the way, and perhaps uncover a few mysteries yet to be solved.</p>
+                        </div>
+                        <a href="https://scientifika.se/talk/2024/09/06/Jentink/" class="media-link">View Talk</a>
+                    </div>
+                </div>
+                
+                <!-- Press Release -->
+                <div class="media-item press-release" data-type="press-release">
+                    <img src="/api/placeholder/900/300" alt="ESO Press Release" class="media-thumbnail">
+                    <div class="image-credit">Image credit: ESO/VLT, 2025</div>
+                    <div class="media-content">
+                        <h3 class="media-title">"Out of science fiction": First 3D observations of an exoplanet's atmosphere reveal a unique climate</h3>
+                        <div class="media-meta">
+                            <div class="media-source">European Southern Observatory</div>
+                            <div class="media-date">February 18, 2025</div>
+                        </div>
+                        <div class="media-tags">
+                            <span class="media-tag">Press Release</span>
+                            <span class="media-tag">Exoplanets</span>
+                            <span class="media-tag">Atmospheres</span>
+                        </div>
+                        <div class="media-description">
+                            <p>Astronomers have peered through the atmosphere of a planet beyond the Solar System, mapping its 3D structure for the first time. By combining all four telescope units of the European Southern Observatory's Very Large Telescope (ESO's VLT), they found powerful winds carrying chemical elements like iron and titanium, creating intricate weather patterns across the planet's atmosphere. The discovery opens the door for detailed studies of the chemical makeup and weather of other alien worlds.</p>
+                        </div>
+                        <a href="https://www.eso.org/public/news/eso2504/" class="media-link">Read Press Release</a>
+                    </div>
+                </div>
+                
+                <!-- Interview - UKrant -->
+                <div class="media-item interview" data-type="interview">
+                    <img src="/api/placeholder/900/300" alt="UKrant Interview" class="media-thumbnail">
+                    <div class="image-credit">Image credit: UKrant, 2021</div>
+                    <div class="media-content">
+                        <h3 class="media-title">Working on a thesis remotely during the Covid pandemic</h3>
+                        <div class="media-meta">
+                            <div class="media-source">UK: University of Groningen Newspaper</div>
+                            <div class="media-date">2021</div>
+                        </div>
+                        <div class="media-tags">
+                            <span class="media-tag">Interview</span>
+                            <span class="media-tag">Academic</span>
+                            <span class="media-tag">COVID-19</span>
+                        </div>
+                        <div class="media-description">
+                            <p>An interview about the challenges of completing a thesis during the COVID-19 pandemic and adapting to remote research work in astrophysics.</p>
+                        </div>
+                        <a href="https://ukrant.nl/magazine/alsof-die-scriptie-nog-niet-moeilijk-genoeg-was/" class="media-link">Read Interview</a>
+                    </div>
+                </div>
+                
+                <!-- Interview - NOS News -->
+                <div class="media-item interview" data-type="interview">
+                    <img src="/api/placeholder/900/300" alt="NOS News" class="media-thumbnail">
+                    <div class="image-credit">Image credit: NOS, 2020</div>
+                    <div class="media-content">
+                        <h3 class="media-title">NOS News - The Great Conjunction</h3>
+                        <div class="media-meta">
+                            <div class="media-source">NOS News (Dutch National Television)</div>
+                            <div class="media-date">December 2020</div>
+                        </div>
+                        <div class="media-tags">
+                            <span class="media-tag">Interview</span>
+                            <span class="media-tag">Astronomy</span>
+                            <span class="media-tag">Television</span>
+                        </div>
+                        <div class="media-description">
+                            <p>Featured on the Dutch national news (NOS) discussing the rare conjunction of Jupiter and Saturn in late 2020, explaining the astronomical significance of this event and how the public could observe it.</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Article -->
+                <div class="media-item article" data-type="article">
+                    <img src="/api/placeholder/900/300" alt="DOT Article" class="media-thumbnail">
+                    <div class="image-credit">Image credit: Dutch Physics Magazine, 2020</div>
+                    <div class="media-content">
+                        <h3 class="media-title">Sterrenkijken, maar dan binnen</h3>
+                        <div class="media-meta">
+                            <div class="media-source">Dutch Physics Magazine</div>
+                            <div class="media-date">2020</div>
+                        </div>
+                        <div class="media-tags">
+                            <span class="media-tag">Article</span>
+                            <span class="media-tag">Outreach</span>
+                            <span class="media-tag">Planetarium</span>
+                        </div>
+                        <div class="media-description">
+                            <p>An article I wrote for the Dutch magazine of physics about the live planetarium shows we run at DOT (Dutch Open Telescope), describing how digital planetariums have revolutionized astronomy education and public outreach.</p>
+                        </div>
+                        <a href="#" class="media-link">Read Article (PDF)</a>
+                    </div>
+                </div>
+                
+                <!-- No results message (hidden by default) -->
+                <div class="no-results" style="display: none;">
+                    <p>No media items match the selected filter.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <footer>
+        <div class="container">
+            <div class="footer-links">
+                <a href="index.html" class="footer-link">Home</a>
+                <a href="cv.html" class="footer-link">CV</a>
+                <a href="research.html" class="footer-link">Research</a>
+                <a href="night.html" class="footer-link">NIGHT</a>
+                <a href="aboras.html" class="footer-link">ABORAS</a>
+                <a href="posters.html" class="footer-link">Posters</a>
+                <a href="media.html" class="footer-link">Media</a>
+            </div>
+            <div class="social-links">
+                <a href="#" class="social-link">G</a>
+                <a href="#" class="social-link">T</a>
+                <a href="#" class="social-link">L</a>
+            </div>
+            <div class="copyright">
+                © 2025 Casper Farret Jentink. All rights reserved.
+            </div>
+        </div>
+    </footer>
+    
+    <script>
+        // Filtering functionality
+        document.querySelectorAll('.filter-btn').forEach(button => {
+            button.addEventListener('click', function() {
+                // Update active state
+                document.querySelectorAll('.filter-btn').forEach(btn => {
+                    btn.classList.remove('active');
+                });
+                this.classList.add('active');
+                
+                const filter = this.getAttribute('data-filter');
+                const mediaItems = document.querySelectorAll('.media-item');
+                let visibleCount = 0;
+                
+                mediaItems.forEach(item => {
+                    if (filter === 'all' || item.getAttribute('data-type').includes(filter)) {
+                        item.style.display = 'block';
+                        visibleCount++;
+                    } else {
+                        item.style.display = 'none';
+                    }
+                });
+                
+                // Show/hide "no results" message
+                document.querySelector('.no-results').style.display = visibleCount === 0 ? 'block' : 'none';
+            });
+        });
+        // Mobile Menu Toggle
+        document.addEventListener('DOMContentLoaded', function() {
+            const menuToggle = document.getElementById('menuToggle');
+            const mobileMenu = document.getElementById('mobileMenu');
+            
+            if (menuToggle && mobileMenu) {
+                menuToggle.addEventListener('click', function() {
+                    mobileMenu.classList.toggle('active');
+                    menuToggle.textContent = mobileMenu.classList.contains('active') ? '✕' : '☰';
+                });
+                
+                // Close menu when clicking a link
+                const navLinks = mobileMenu.querySelectorAll('a');
+                navLinks.forEach(link => {
+                    link.addEventListener('click', function() {
+                        mobileMenu.classList.remove('active');
+                        menuToggle.textContent = '☰';
+                    });
+                });
+                
+                // Close menu when clicking outside
+                document.addEventListener('click', function(event) {
+                    if (!mobileMenu.contains(event.target) && !menuToggle.contains(event.target) && mobileMenu.classList.contains('active')) {
+                        mobileMenu.classList.remove('active');
+                        menuToggle.textContent = '☰';
+                    }
+                });
+            }
+        });
+    </script>
+</body>
+</html>

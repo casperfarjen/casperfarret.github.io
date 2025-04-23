@@ -1,0 +1,843 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NIGHT Instrument - Casper Farret Jentink</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --dark-bg: #121212;
+            --darker-bg: #0a0a0a;
+            --accent: #c15050;
+            --secondary-accent: #a03c3c;
+            --text: #e0e0e0;
+            --subtle-text: #a0a0a0;
+            --border: #2a2a2a;
+        }
+        
+        h1, h2, h3, h4, h5, h6 {
+            font-family: 'Space Grotesk', sans-serif;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Inter', 'Segoe UI', Roboto, -apple-system, BlinkMacSystemFont, sans-serif;
+            background-color: var(--dark-bg);
+            color: var(--text);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+        
+        /* NIGHT-specific background */
+        body::before {
+            content: "";
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url('/api/placeholder/2000/1500');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            opacity: 0.15;
+            z-index: -1;
+        }
+        
+        body::after {
+            content: "";
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.8);
+            z-index: -1;
+        }
+        
+        header {
+            background-color: var(--darker-bg);
+            padding: 1rem 0;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+        }
+        
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            font-weight: 700;
+            font-size: 1.5rem;
+            color: var(--text);
+            text-decoration: none;
+        }
+        
+        .nav-links {
+            display: flex;
+            list-style: none;
+        }
+        
+        .nav-links li {
+            margin-left: 2rem;
+        }
+        
+        .nav-links a {
+            color: var(--subtle-text);
+            text-decoration: none;
+            font-size: 0.95rem;
+            transition: color 0.3s;
+            font-weight: 500;
+        }
+        
+        .nav-links a:hover,
+        .nav-links a.active {
+            color: var(--accent);
+        }
+        
+        section {
+            padding: 5rem 0;
+        }
+        
+        h1 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            background: linear-gradient(to right, var(--accent), #e67373);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+        
+        h2 {
+            font-size: 2rem;
+            margin-bottom: 1.5rem;
+            margin-top: 3rem;
+            color: var(--accent);
+        }
+        
+        h3 {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            margin-top: 2rem;
+            color: var(--text);
+        }
+        
+        p {
+            margin-bottom: 1.5rem;
+            color: var(--subtle-text);
+        }
+        
+        .project-header {
+            display: flex;
+            align-items: center;
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+        
+        .project-title {
+            flex: 1;
+        }
+        
+        .project-title .subtitle {
+            font-size: 1.4rem;
+            color: var(--subtle-text);
+            margin-bottom: 1rem;
+        }
+        
+        .project-image {
+            flex: 1;
+            position: relative;
+        }
+        
+        .project-image img {
+            width: 100%;
+            border-radius: 12px;
+            border: 1px solid var(--border);
+        }
+        
+        .features {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 2rem;
+            margin: 3rem 0;
+        }
+        
+        .feature-card {
+            background-color: rgba(255, 255, 255, 0.05);
+            border-radius: 12px;
+            padding: 1.5rem;
+            border: 1px solid var(--border);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        
+        .feature-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+        }
+        
+        .feature-card h4 {
+            color: var(--accent);
+            margin-bottom: 1rem;
+            font-size: 1.2rem;
+        }
+        
+        .feature-card p {
+            font-size: 0.95rem;
+            color: var(--subtle-text);
+        }
+        
+        .gallery {
+            margin: 3rem 0;
+        }
+        
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 1.5rem;
+        }
+        
+        .gallery-item {
+            position: relative;
+            overflow: hidden;
+            border-radius: 8px;
+            height: 250px;
+            cursor: pointer;
+            border: 1px solid var(--border);
+        }
+        
+        .gallery-image {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.3s;
+        }
+        
+        .gallery-item:hover .gallery-image {
+            transform: scale(1.05);
+        }
+        
+        .team-section {
+            margin: 3rem 0;
+        }
+        
+        .team-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 2rem;
+        }
+        
+        .team-member {
+            text-align: center;
+        }
+        
+        .team-member-image {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            margin: 0 auto 1rem;
+            object-fit: cover;
+            border: 2px solid var(--border);
+        }
+        
+        .team-member-name {
+            font-weight: 600;
+            margin-bottom: 0.3rem;
+        }
+        
+        .team-member-role {
+            font-size: 0.9rem;
+            color: var(--subtle-text);
+        }
+        
+        .timeline {
+            margin: 3rem 0;
+            position: relative;
+        }
+        
+        .timeline::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            left: 50%;
+            width: 2px;
+            background-color: var(--border);
+            transform: translateX(-50%);
+        }
+        
+        .timeline-item {
+            margin-bottom: 3rem;
+            position: relative;
+        }
+        
+        .timeline-content {
+            width: 45%;
+            padding: 1.5rem;
+            background-color: rgba(255, 255, 255, 0.05);
+            border-radius: 12px;
+            border: 1px solid var(--border);
+            position: relative;
+        }
+        
+        .timeline-item:nth-child(odd) .timeline-content {
+            margin-left: auto;
+        }
+        
+        .timeline-item:nth-child(odd) .timeline-content::before {
+            content: '';
+            position: absolute;
+            top: 1.5rem;
+            left: -10px;
+            width: 20px;
+            height: 2px;
+            background-color: var(--border);
+        }
+        
+        .timeline-item:nth-child(even) .timeline-content::before {
+            content: '';
+            position: absolute;
+            top: 1.5rem;
+            right: -10px;
+            width: 20px;
+            height: 2px;
+            background-color: var(--border);
+        }
+        
+        .timeline-date {
+            position: absolute;
+            top: 1rem;
+            width: 100px;
+            padding: 0.5rem;
+            background-color: var(--accent);
+            border-radius: 4px;
+            text-align: center;
+            font-weight: 600;
+            font-size: 0.9rem;
+        }
+        
+        .timeline-item:nth-child(odd) .timeline-date {
+            left: -100px;
+        }
+        
+        .timeline-item:nth-child(even) .timeline-date {
+            right: -100px;
+        }
+        
+        .timeline-title {
+            font-size: 1.2rem;
+            margin-bottom: 0.5rem;
+        }
+        
+        .publications-section {
+            margin: 3rem 0;
+        }
+        
+        .publication {
+            margin-bottom: 1.5rem;
+            padding-bottom: 1.5rem;
+            border-bottom: 1px solid var(--border);
+        }
+        
+        .publication:last-child {
+            border-bottom: none;
+        }
+        
+        .publication-title {
+            font-size: 1.1rem;
+            color: var(--text);
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+        }
+        
+        .publication-authors {
+            font-size: 0.9rem;
+            color: var(--subtle-text);
+            margin-bottom: 0.5rem;
+        }
+        
+        .publication-journal {
+            font-size: 0.9rem;
+            color: var(--accent);
+            margin-bottom: 0.5rem;
+            font-style: italic;
+        }
+        
+        .publication-links {
+            display: flex;
+            gap: 1rem;
+            margin-top: 0.5rem;
+        }
+        
+        .publication-link {
+            font-size: 0.8rem;
+            color: var(--accent);
+            text-decoration: none;
+        }
+        
+        .publication-link:hover {
+            text-decoration: underline;
+        }
+        
+        .contact-section {
+            margin: 3rem 0;
+            text-align: center;
+        }
+        
+        .btn {
+            display: inline-block;
+            background-color: var(--accent);
+            color: white;
+            padding: 0.8rem 1.5rem;
+            border-radius: 5px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s;
+            border: none;
+            cursor: pointer;
+        }
+        
+        .btn:hover {
+            background-color: var(--secondary-accent);
+            transform: translateY(-2px);
+        }
+        
+        footer {
+            background-color: var(--darker-bg);
+            padding: 3rem 0;
+            text-align: center;
+            margin-top: 5rem;
+        }
+        
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            margin-bottom: 2rem;
+            flex-wrap: wrap;
+            padding: 0 1rem;
+        }
+        
+        .footer-link {
+            color: var(--subtle-text);
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+        
+        .footer-link:hover {
+            color: var(--accent);
+        }
+        
+        .social-links {
+            display: flex;
+            justify-content: center;
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+        
+        .social-link {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background-color: rgba(255, 255, 255, 0.1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--text);
+            transition: background-color 0.3s, transform 0.3s;
+        }
+        
+        .social-link:hover {
+            background-color: var(--accent);
+            transform: translateY(-3px);
+        }
+        
+        .copyright {
+            font-size: 0.9rem;
+            color: var(--subtle-text);
+        }
+        
+        .image-credit {
+            font-size: 0.7rem;
+            color: var(--subtle-text);
+            opacity: 0.7;
+            text-align: right;
+            margin-top: 5px;
+            font-style: italic;
+        }
+        
+        /* Mobile Menu Styles */
+        .menu-toggle {
+            display: none;
+            background: none;
+            border: none;
+            color: var(--text);
+            font-size: 1.5rem;
+            cursor: pointer;
+            padding: 0.5rem;
+        }
+        
+        @media (max-width: 992px) {
+            .project-header {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            .timeline::before {
+                left: 0;
+            }
+            
+            .timeline-content {
+                width: 90%;
+                margin-left: auto !important;
+            }
+            
+            .timeline-item:nth-child(odd) .timeline-content::before,
+            .timeline-item:nth-child(even) .timeline-content::before {
+                left: -10px;
+                right: auto;
+            }
+            
+            .timeline-date {
+                position: relative;
+                top: 0;
+                left: 0 !important;
+                right: 0 !important;
+                margin-bottom: 1rem;
+                width: auto;
+                display: inline-block;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .menu-toggle {
+                display: block;
+            }
+            
+            .nav-links {
+                position: fixed;
+                top: 60px;
+                left: 0;
+                width: 100%;
+                background-color: var(--darker-bg);
+                flex-direction: column;
+                align-items: center;
+                padding: 1rem 0;
+                box-shadow: 0 5px 10px rgba(0, 0, 0, 0.3);
+                transform: translateY(-100%);
+                opacity: 0;
+                visibility: hidden;
+                transition: all 0.3s ease-in-out;
+                z-index: 999;
+            }
+            
+            .nav-links.active {
+                transform: translateY(0);
+                opacity: 1;
+                visibility: visible;
+            }
+            
+            .nav-links li {
+                margin: 0.8rem 0;
+            }
+            
+            .nav-links a {
+                font-size: 1.1rem;
+                padding: 0.5rem 1rem;
+                display: block;
+            }
+            
+            h1 {
+                font-size: 2.2rem;
+            }
+            
+            .features,
+            .gallery-grid,
+            .team-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+        
+        @media (max-width: 576px) {
+            .poster-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .modal-content {
+                padding: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <nav>
+                <a href="index.html" class="logo">Casper Farret Jentink</a>
+                <button class="menu-toggle" id="menuToggle">☰</button>
+                <ul class="nav-links" id="mobileMenu">
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="cv.html">CV</a></li>
+                    <li><a href="research.html">Research & Publications</a></li>
+                    <li><a href="night.html" class="active">NIGHT</a></li>
+                    <li><a href="aboras.html">ABORAS</a></li>
+                    <li><a href="posters.html">Cool Posters</a></li>
+                    <li><a href="media.html">Media</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+    
+    <div style="position: fixed; top: 80px; right: 20px; z-index: 100; background-color: var(--darker-bg); padding: 10px; border-radius: 8px; box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3); border: 1px solid var(--border);">
+        <img src="/api/placeholder/60/60" alt="NIGHT Logo" style="width: 60px; height: 60px; border-radius: 4px; object-fit: contain;">
+    </div>
+    
+    <div style="position: fixed; bottom: 10px; right: 10px; font-size: 0.7rem; color: var(--subtle-text); opacity: 0.5; font-style: italic; z-index: 0; background-color: rgba(0,0,0,0.5); padding: 2px 6px; border-radius: 3px;">
+        Background image credit: ESO/VLT, Artist's impression of exoplanet atmosphere
+    </div>
+    
+    <section>
+        <div class="container">
+            <div class="project-header">
+                <div class="project-title">
+                    <h1>NIGHT</h1>
+                    <div class="subtitle">Near-Infrared Gatherer of Helium Transits</div>
+                    <p>A dedicated high-resolution spectrograph for surveying helium in exoplanet atmospheres, designed to study atmospheric escape and evolution.</p>
+                </div>
+                <div class="project-image">
+                    <img src="/api/placeholder/600/400" alt="NIGHT Instrument">
+                    <div class="image-credit">Image credit: NIGHT Collaboration/Observatory of Geneva, 2024</div>
+                </div>
+            </div>
+            
+            <h2>Project Overview</h2>
+            <p>NIGHT (the Near-Infrared Gatherer of Helium Transits) is a narrowband, high-resolution spectrograph, marking the first dedicated survey instrument for exoplanetary atmosphere observations. Developed through a collaboration between the Observatory of Geneva, several other Swiss institutes, and the Université de Montréal, NIGHT aims to conduct an extensive statistical survey of helium atmospheres around 100+ exoplanets over several years.</p>
+            
+            <p>As the project manager, I lead the development of this instrument from concept to completion. NIGHT will measure absorption from the metastable helium state during exoplanet transits, observable in a triplet of lines around 1083.3 nm. By focusing specifically on this key diagnostic feature, we can efficiently survey a large sample of planets to better understand atmospheric escape processes.</p>
+            
+            <div class="features">
+                <div class="feature-card">
+                    <h4>High Spectral Resolution</h4>
+                    <p>Resolution of approximately 75,000, enabling detailed studies of the helium triplet in exoplanet atmospheres.</p>
+                </div>
+                <div class="feature-card">
+                    <h4>Optimized Design</h4>
+                    <p>Specialized for a narrow wavelength range around 1083.3 nm, maximizing efficiency for helium observations.</p>
+                </div>
+                <div class="feature-card">
+                    <h4>Exceptional Throughput</h4>
+                    <p>Approximately 71% throughput, uniform across wavelength and polarization, rivaling larger telescopes.</p>
+                </div>
+                <div class="feature-card">
+                    <h4>Innovative Optics</h4>
+                    <p>Unique double-pass volume-phase holographic grating configuration to achieve high resolution while maintaining throughput.</p>
+                </div>
+                <div class="feature-card">
+                    <h4>Dedicated Survey</h4>
+                    <p>Designed for a multi-year survey of 100+ exoplanets to build a statistical understanding of atmospheric escape.</p>
+                </div>
+                <div class="feature-card">
+                    <h4>Compact Design</h4>
+                    <p>Efficient, compact instrument that can be deployed on 2-meter class telescopes while achieving sensitivity comparable to 4-meter facilities.</p>
+                </div>
+            </div>
+            
+            <h2>Technical Specifications</h2>
+            
+            <h3>Instrument Subsystems</h3>
+            <p>NIGHT comprises three main components:</p>
+            <ul style="margin-left: 2rem; margin-bottom: 1.5rem; color: var(--subtle-text);">
+                <li>A vacuum enclosure housing the spectrograph</li>
+                <li>A front end unit for fiber injection at the telescope's focal plane</li>
+                <li>A calibration and control rack containing light sources and control hardware</li>
+            </ul>
+            
+            <h3>Detector System</h3>
+            <p>NIGHT uses a HAWAII-1 1024 × 1024 infrared array, cooled to 85K, while the spectrograph operates at room temperature. A shortpass filter positioned in front of the detector filters out longer infrared wavelengths.</p>
+            
+            <h3>Optical Design</h3>
+            <p>The primary disperser employs a volume-phase holographic grating in a double-pass configuration, enabling a spectral resolution of 75,000 while maintaining high throughput. This innovative optical design allows NIGHT on a 2-m class telescope to be as sensitive as existing high-resolution spectrographs on 4-m class telescopes.</p>
+            
+            <div class="gallery">
+                <h2>Gallery</h2>
+                <div class="gallery-grid">
+                    <div class="gallery-item">
+                        <img src="/api/placeholder/400/300" alt="NIGHT Instrument - Front View" class="gallery-image">
+                        <div class="image-credit">Image credit: NIGHT Collaboration, 2024</div>
+                    </div>
+                    <div class="gallery-item">
+                        <img src="/api/placeholder/400/300" alt="NIGHT Optical Layout" class="gallery-image">
+                        <div class="image-credit">Image credit: NIGHT Collaboration, 2024</div>
+                    </div>
+                    <div class="gallery-item">
+                        <img src="/api/placeholder/400/300" alt="NIGHT at the Telescope" class="gallery-image">
+                        <div class="image-credit">Image credit: NIGHT Collaboration, 2024</div>
+                    </div>
+                    <div class="gallery-item">
+                        <img src="/api/placeholder/400/300" alt="NIGHT Project Team" class="gallery-image">
+                        <div class="image-credit">Image credit: NIGHT Collaboration, 2024</div>
+                    </div>
+                </div>
+            </div>
+            
+            <h2>Scientific Goals</h2>
+            <p>NIGHT is designed to conduct the first large-scale survey of helium in exoplanet atmospheres. This survey will:</p>
+            <ul style="margin-left: 2rem; margin-bottom: 1.5rem; color: var(--subtle-text);">
+                <li>Detect helium in the atmospheres of 100+ exoplanets</li>
+                <li>Provide statistical insights into the factors controlling atmospheric escape</li>
+                <li>Monitor temporal variations in atmospheric escape rates for selected targets</li>
+                <li>Inform models of exoplanet evolution and population demographics</li>
+                <li>Identify promising targets for more detailed follow-up with larger facilities</li>
+            </ul>
+            
+            <div class="timeline">
+                <h2>Project Timeline</h2>
+                
+                <div class="timeline-item">
+                    <div class="timeline-date">2021</div>
+                    <div class="timeline-content">
+                        <div class="timeline-title">Project Initiation</div>
+                        <p>Conceptual design and project planning. Secured initial funding and established collaboration with the Université de Montréal.</p>
+                    </div>
+                </div>
+                
+                <div class="timeline-item">
+                    <div class="timeline-date">2022</div>
+                    <div class="timeline-content">
+                        <div class="timeline-title">Preliminary Design</div>
+                        <p>Completed optical and mechanical designs. Began procurement of long-lead components. Established target selection criteria for the survey.</p>
+                    </div>
+                </div>
+                
+                <div class="timeline-item">
+                    <div class="timeline-date">2023</div>
+                    <div class="timeline-content">
+                        <div class="timeline-title">Detailed Design</div>
+                        <p>Finalized all subsystem designs. Began manufacturing of custom components. Developed data reduction and analysis pipeline.</p>
+                    </div>
+                </div>
+                
+                <div class="timeline-item">
+                    <div class="timeline-date">2024</div>
+                    <div class="timeline-content">
+                        <div class="timeline-title">Assembly & Integration</div>
+                        <p>Assembly and optical alignment of the spectrograph and front end unit. Lab testing and characterization. Preparation for shipping to telescope site.</p>
+                    </div>
+                </div>
+                
+                <div class="timeline-item">
+                    <div class="timeline-date">2025</div>
+                    <div class="timeline-content">
+                        <div class="timeline-title">First Light & Commissioning</div>
+                        <p>Installation at the telescope. First light observations and commissioning. Beginning of the baseline survey requiring 75 nights per year.</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="publications-section">
+                <h2>Related Publications</h2>
+                
+                <div class="publication">
+                    <div class="publication-title">The Near-Infrared Gatherer of Helium Transits (NIGHT)</div>
+                    <div class="publication-authors">Farret Jentink, C., Pepe, F., Lovis, C., Bovay, S., Wildi, F., Chazelas, B., ... & Cochard, F.</div>
+                    <div class="publication-journal">Society of Photo-Optical Instrumentation Engineers (SPIE) Conference Series (2024)</div>
+                    <div class="publication-links">
+                        <a href="#" class="publication-link">DOI: 10.1117/12.3014420</a>
+                        <a href="#" class="publication-link">arXiv: 2405.18899</a>
+                        <a href="papers/FarretJentink2024SPIE.pdf" class="publication-link">PDF</a>
+                    </div>
+                </div>
+                
+                <div class="publication">
+                    <div class="publication-title">NIGHT: A compact, near-infrared, high-resolution spectrograph to survey helium in exoplanet systems</div>
+                    <div class="publication-authors">Farret Jentink, C., Bourrier, V., Lovis, C., Allart, R., Chazelas, B., Lendl, M., Dumusque, X. & Pepe, F.</div>
+                    <div class="publication-journal">Monthly Notices of the Royal Astronomical Society (2024)</div>
+                    <div class="publication-links">
+                        <a href="#" class="publication-link">DOI: 10.1093/mnras/stad3285</a>
+                        <a href="#" class="publication-link">arXiv: 2310.17275</a>
+                        <a href="papers/FarretJentink2024MNRAS.pdf" class="publication-link">PDF</a>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="contact-section">
+                <h2>Contact</h2>
+                <p>For more information about the NIGHT instrument or potential collaborations, please contact:</p>
+                <p>Casper Farret Jentink<br>Project Manager, NIGHT<br>Email: <a href="mailto:casper.farret@unige.ch" style="color: var(--accent);">casper.farret@unige.ch</a></p>
+                <a href="research.html" class="btn">Back to Research</a>
+            </div>
+        </div>
+    </section>
+    
+    <footer>
+        <div class="container">
+            <div class="footer-links">
+                <a href="index.html" class="footer-link">Home</a>
+                <a href="cv.html" class="footer-link">CV</a>
+                <a href="research.html" class="footer-link">Research</a>
+                <a href="night.html" class="footer-link">NIGHT</a>
+                <a href="aboras.html" class="footer-link">ABORAS</a>
+                <a href="posters.html" class="footer-link">Posters</a>
+                <a href="media.html" class="footer-link">Media</a>
+            </div>
+            <div class="social-links">
+                <a href="#" class="social-link">G</a>
+                <a href="#" class="social-link">T</a>
+                <a href="#" class="social-link">L</a>
+            </div>
+            <div class="copyright">
+                © 2025 Casper Farret Jentink. All rights reserved.
+            </div>
+        </div>
+    </footer>
+    
+    <script>
+        // Mobile Menu Toggle
+        document.addEventListener('DOMContentLoaded', function() {
+            const menuToggle = document.getElementById('menuToggle');
+            const mobileMenu = document.getElementById('mobileMenu');
+            
+            if (menuToggle && mobileMenu) {
+                menuToggle.addEventListener('click', function() {
+                    mobileMenu.classList.toggle('active');
+                    menuToggle.textContent = mobileMenu.classList.contains('active') ? '✕' : '☰';
+                });
+                
+                // Close menu when clicking a link
+                const navLinks = mobileMenu.querySelectorAll('a');
+                navLinks.forEach(link => {
+                    link.addEventListener('click', function() {
+                        mobileMenu.classList.remove('active');
+                        menuToggle.textContent = '☰';
+                    });
+                });
+                
+                // Close menu when clicking outside
+                document.addEventListener('click', function(event) {
+                    if (!mobileMenu.contains(event.target) && !menuToggle.contains(event.target) && mobileMenu.classList.contains('active')) {
+                        mobileMenu.classList.remove('active');
+                        menuToggle.textContent = '☰';
+                    }
+                });
+            }
+        });
+    </script>
+</body>
+</html>
