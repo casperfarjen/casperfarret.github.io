@@ -1,8 +1,4 @@
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -20,6 +16,12 @@
             --text: #e0e0e0;
             --subtle-text: #a0a0a0;
             --border: #2a2a2a;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
         }
         
         h1, h2, h3, h4, h5, h6 {
@@ -313,6 +315,15 @@
             color: var(--subtle-text);
         }
         
+        .image-credit {
+            font-size: 0.7rem;
+            color: var(--subtle-text);
+            opacity: 0.7;
+            text-align: right;
+            margin-top: 5px;
+            font-style: italic;
+        }
+        
         /* Mobile Menu Styles */
         .menu-toggle {
             display: none;
@@ -372,6 +383,16 @@
             
             .publication-title {
                 font-size: 1.1rem;
+            }
+        }
+        
+        @media (max-width: 576px) {
+            .footer-links {
+                gap: 1rem;
+            }
+            
+            .footer-link {
+                font-size: 0.9rem;
             }
         }
     </style>
