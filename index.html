@@ -35,6 +35,33 @@
             line-height: 1.6;
             overflow-x: hidden;
         }
+
+        /* Background image */
+        body::before {
+            content: "";
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url('/casperfarret.github.io/images/Detector_NIGHT.png');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            opacity: 0.5;
+            z-index: -1;
+        }
+
+        body::after {
+            content: "";
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.6);
+            z-index: -1;
+        }
         
         header {
             background-color: var(--darker-bg);
@@ -270,29 +297,6 @@
             text-decoration: underline;
         }
         
-        .stars {
-            position: absolute;
-            width: 100%;
-            height: 100%;
-            top: 0;
-            left: 0;
-            z-index: -1;
-            opacity: 0.5;
-            overflow: hidden;
-        }
-        
-        .star {
-            position: absolute;
-            background-color: white;
-            border-radius: 50%;
-            animation: twinkle 5s infinite;
-        }
-        
-        @keyframes twinkle {
-            0%, 100% { opacity: 0.2; }
-            50% { opacity: 1; }
-        }
-        
         .image-credit {
             font-size: 0.7rem;
             color: var(--subtle-text);
@@ -474,7 +478,6 @@
     </header>
     
     <section class="hero">
-        <div class="stars"></div>
         <div class="container">
             <div class="hero-content">
                 <div class="hero-text">
